@@ -1,26 +1,14 @@
-function getPokemon(pokemon_1, pokemon_2) {
-  Promise.all([
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon_1}`),
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon_2}`),
-  ])
-    .then(([response1, response2]) => {
-      if (!response1.ok)
-        throw new Error(
-          "There is a problem while fetching Player's 1 Pokemon.",
-        );
-      if (!response2.ok)
-        throw new Error(
-          "There is a problem while fetching Player's 2 Pokemon.",
-        );
-      // console.log(response);
-      return Promise.all([response1.json(), response2.json()]);
-    })
-    .then(([pokemon_1, pokemon_2]) => {
-      displayPokemon(pokemon_1, pokemon_2);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+async function getPokemon(pokemon_1, pokemon_2) {
+  const response1 = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${pokemon_1}`,
+  );
+  const response2 = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${pokemon_2}`,
+  );
+  const pokeData1 = await response1.json();
+  const pokeData2 = await response2.json();
+
+  displayPokemon(pokeData1, pokeData2);
 }
 
 let p1_score = 0;
