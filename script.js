@@ -1,14 +1,24 @@
 async function getPokemon(pokemon_1, pokemon_2) {
-  const response1 = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${pokemon_1}`,
-  );
-  const response2 = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${pokemon_2}`,
-  );
-  const pokeData1 = await response1.json();
-  const pokeData2 = await response2.json();
+  try {
+    const response1 = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${pokemon_1}`,
+    );
+    if (!response1.ok) {
+      throw new Error("Pokemon 1 not present");
+    }
+    const response2 = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${pokemon_2}`,
+    );
+    if (!response2.ok) {
+      throw new Error("Pokemon 2 not present");
+    }
+    const pokeData1 = await response1.json();
+    const pokeData2 = await response2.json();
 
-  displayPokemon(pokeData1, pokeData2);
+    displayPokemon(pokeData1, pokeData2);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 let p1_score = 0;
